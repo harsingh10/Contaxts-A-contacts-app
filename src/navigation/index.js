@@ -11,7 +11,7 @@ const AppNavContainer = () => {
     authState: {isLoggedIn},
   } = useContext(GlobalContext);
   const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn);
-  const [authLoaded, setAuthLoaded] = useState(true);
+  const [authLoaded, setAuthLoaded] = useState(false);
 
   const getUser = async () => {
     try {
