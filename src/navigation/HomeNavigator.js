@@ -14,6 +14,7 @@ const HomeNavigator = () =>{
             <HomeStack.Screen name={CONTACT_LIST} component={Contacts} />
             <HomeStack.Screen name={CONTACT_DETAIL} component={ContactDetail} />
             <HomeStack.Screen name={SETTINGS} component={Settings} />
+            <HomeStack.Screen  name={CREATE_CONTACT} component={CreateContact} />
         </HomeStack.Navigator>
     );
 };

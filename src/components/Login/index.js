@@ -9,7 +9,15 @@ import {useNavigation} from '@react-navigation/native';
 import Register from '../../screens/Register/index';
 import Message from '../common/Message/index';
 
-const Index = ({onSubmit, isRegistered, onChange, form, error, loading, ...props}) => {
+const Index = ({
+  onSubmit,
+  isRegistered,
+  onChange,
+  form,
+  error,
+  loading,
+  ...props
+}) => {
   // const [value, onChangeText] = React.useState('');
   const {navigate} = useNavigation();
   const [isSecureEntry, setIsSecureEntry] = useState(true);
@@ -23,9 +31,13 @@ const Index = ({onSubmit, isRegistered, onChange, form, error, loading, ...props
       <View>
         <Text style={styles.title}>Welcome to Contaxts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
-        
+
         {isRegistered && (
-          <Message success message="Registered Successfully" onDismiss={() => {}} />
+          <Message
+            success
+            message="Registered Successfully"
+            onDismiss={() => {}}
+          />
         )}
         {error && !error?.error && (
           <Message danger message="Invalid credentials" onDismiss={() => {}} />
@@ -49,7 +61,8 @@ const Index = ({onSubmit, isRegistered, onChange, form, error, loading, ...props
             placeholder="Enter Password"
             secureTextEntry={isSecureEntry}
             icon={
-              <TouchableOpacity onPress={(prev)=>setIsSecureEntry((prev)=>!prev)}>
+              <TouchableOpacity
+                onPress={prev => setIsSecureEntry(prev => !prev)}>
                 <Text>{isSecureEntry ? 'Show' : 'Hide'}</Text>
               </TouchableOpacity>
             }
@@ -63,7 +76,7 @@ const Index = ({onSubmit, isRegistered, onChange, form, error, loading, ...props
             disabled={loading}
             loading={loading}
             primary
-            title="Submit"
+            title={loading ? 'Please wait...' : 'Submit'}
           />
 
           <View style={styles.createSection}>

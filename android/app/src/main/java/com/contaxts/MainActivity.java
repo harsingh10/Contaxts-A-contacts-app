@@ -1,4 +1,4 @@
-package com.contaxts;
+package com.hardeep.contaxts;
 
 import com.facebook.react.ReactActivity;
 

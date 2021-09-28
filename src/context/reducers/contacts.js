@@ -1,11 +1,47 @@
 import {
-    GET_CONTACTS_LOADING,
-    GET_CONTACTS_SUCCESS,
-    GET_CONTACTS_FAIL,
-  } from '../../constants/actionTypes';
+  GET_CONTACTS_LOADING,
+  GET_CONTACTS_SUCCESS,
+  GET_CONTACTS_FAIL,
+  CREATE_CONTACTS_LOADING,
+  CREATE_CONTACTS_SUCCESS,
+  CREATE_CONTACTS_FAIL,
+} from '../../constants/actionTypes';
 
 const contacts = (state, {type, payload}) => {
   switch (type) {
+    case CREATE_CONTACTS_LOADING:
+      return {
+        ...state,
+        createContact: {
+          ...state.createContact,
+          loading: true,
+          error: null,
+        },
+      };
+    case CREATE_CONTACTS_SUCCESS:
+      return {
+        ...state,
+        createContact: {
+          ...state.createContact,
+          loading: false,
+          data: payload,
+        },
+        getContacts:{
+          ...state.getContacts,
+          loading:false,
+          data:[payload,...state.getContacts.data],
+          error:null,
+        },
+      };
+    case CREATE_CONTACTS_FAIL:
+      return {
+        ...state,
+        createContact: {
+          ...state.createContact,
+          loading: false,
+          error: payload,
+        },
+      };
     case GET_CONTACTS_LOADING:
       return {
         ...state,
@@ -22,18 +58,18 @@ const contacts = (state, {type, payload}) => {
           ...state.getContacts,
           loading: false,
           data: payload,
-          error:null
+          error: null,
         },
       };
-        case GET_CONTACTS_FAIL:
+    case GET_CONTACTS_FAIL:
       return {
         ...state,
         getContacts: {
           ...state.getContacts,
           loading: false,
-          error:payload
+          error: payload,
         },
-      };  
+      };
 
     default:
       return state;
