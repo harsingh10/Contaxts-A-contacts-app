@@ -25,7 +25,6 @@ const CreateContacts = ({
   localFile,
   ...props
 }) => {
-  console.log("local===>>>>",localFile);
   return (
     <View style={styles.container}>
       <Container>

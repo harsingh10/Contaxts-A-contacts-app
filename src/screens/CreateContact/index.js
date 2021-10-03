@@ -1,15 +1,16 @@
 import React, {useContext, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
-import Input from '../../components/common/Input';
 import CreateContacts from '../../components/CreateContacs';
 import {GlobalContext} from '../../context/Provider';
 import createContacts from '../../context/actions/contacts/createContacts';
 import {useNavigation} from '@react-navigation/core';
 import {CONTACT_LIST} from '../../constants/routeNames';
+import UploadPicture from '../../helpers/UploadPicture';
 
 const CreateContact = () => {
   const [form, setForm] = useState({});
   const [localFile, setLocalFile] = useState(null);
+  const [uploading, setIsUploading] = useState(false);
   const sheetRef = useRef(null);
   const {
     contactsDispatch,
@@ -31,11 +32,23 @@ const CreateContact = () => {
     }
     setForm({...form, [name]: value});
   };
+
   const onSubmit = () => {
-    console.log('toggleSwitch form ======>>>>>', form);
-    createContacts(form)(contactsDispatch)(() => {
-      navigate(CONTACT_LIST);
-    });
+      if (localFile?.size) {
+        setIsUploading(true);
+        UploadPicture(localFile)((url) => {
+          setIsUploading(false);
+          // setForm();
+          createContacts({...form, 'contactPicture': url})(contactsDispatch)(
+            () => {
+              navigate(CONTACT_LIST);
+            },
+          );
+        })((err) => {
+          setIsUploading(false);
+        });
+      }
+
   };
   const toggleSwitch = () => {
     setForm({...form, isFavorite: !form.isFavorite});
@@ -53,7 +66,6 @@ const CreateContact = () => {
   const fileSelected = image => {
     closeSheet();
     setLocalFile(image);
-    console.log(image);
   };
   return (
     <CreateContacts
@@ -62,7 +74,7 @@ const CreateContact = () => {
       setForm={setForm}
       onSubmit={onSubmit}
       error={error}
-      loading={loading}
+      loading={loading || uploading}
       toggleSwitch={toggleSwitch}
       sheetRef={sheetRef}
       openSheet={openSheet}

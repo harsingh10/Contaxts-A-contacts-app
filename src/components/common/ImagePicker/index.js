@@ -7,6 +7,7 @@ import Icon from '../Icon';
 import styles from './styles';
 import imagePickerCropper from "react-native-image-crop-picker";
 
+
 const ImagePicker = forwardRef(({fileSelected}, ref) => {
   const optionsBottom = [
     {
